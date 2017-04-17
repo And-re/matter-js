@@ -11,7 +11,7 @@ module.exports = Pair;
 var Contact = require('./Contact');
 
 (function() {
-    
+
     /**
      * Creates a pair.
      * @method create
@@ -39,7 +39,7 @@ var Contact = require('./Contact');
             inverseMass: parentA.inverseMass + parentB.inverseMass,
             friction: Math.min(parentA.friction, parentB.friction),
             frictionStatic: Math.max(parentA.frictionStatic, parentB.frictionStatic),
-            restitution: Math.max(parentA.restitution, parentB.restitution),
+            restitution: parentA.restitution * parentB.restitution,
             slop: Math.max(parentA.slop, parentB.slop)
         };
 
@@ -61,15 +61,15 @@ var Contact = require('./Contact');
             activeContacts = pair.activeContacts,
             parentA = collision.parentA,
             parentB = collision.parentB;
-        
+
         pair.collision = collision;
         pair.inverseMass = parentA.inverseMass + parentB.inverseMass;
         pair.friction = Math.min(parentA.friction, parentB.friction);
         pair.frictionStatic = Math.max(parentA.frictionStatic, parentB.frictionStatic);
-        pair.restitution = Math.max(parentA.restitution, parentB.restitution);
+        pair.restitution = parentA.restitution * parentB.restitution;
         pair.slop = Math.max(parentA.slop, parentB.slop);
         activeContacts.length = 0;
-        
+
         if (collision.collided) {
             for (var i = 0; i < supports.length; i++) {
                 var support = supports[i],
@@ -90,7 +90,7 @@ var Contact = require('./Contact');
                 Pair.setActive(pair, false, timestamp);
         }
     };
-    
+
     /**
      * Set a pair as active or inactive.
      * @method setActive
