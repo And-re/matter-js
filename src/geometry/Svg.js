@@ -97,7 +97,7 @@ var Bounds = require('../geometry/Bounds');
         };
 
         // ensure path is absolute
-        _svgPathToAbsolute(path);
+        Svg._svgPathToAbsolute(path);
 
         // get total length
         total = path.getTotalLength();
@@ -149,8 +149,11 @@ var Bounds = require('../geometry/Bounds');
         return points;
     };
 
-    var _svgPathToAbsolute = function(path) {
+    Svg._svgPathToAbsolute = function(path) {
         // http://phrogz.net/convert-svg-path-to-all-absolute-commands
+        // Copyright (c) Gavin Kistner
+        // http://phrogz.net/js/_ReuseLicense.txt
+        // Modifications: tidy formatting and naming
         var x0, y0, x1, y1, x2, y2, segs = path.pathSegList,
             x = 0, y = 0, len = segs.numberOfItems;
 
